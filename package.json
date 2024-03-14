@@ -4,7 +4,9 @@
     "helmet": "^7.1.0",
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
   "name": "assignment-api-design",
   "description": "In this assignment, you will implement a web API following the theory of REST. We encourage you to have your ideas about the API service to build. Maybe you have some idea you want to start with through an API-driven design? For those of you without any ideas, we present a scenario below. That will also give a hint of the extent of this assignment.",
