@@ -1,26 +1,41 @@
 import mongoose from 'mongoose'
 
+const dbURI = process.env.DB_URI
+
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose connected to DB.')
+})
+
+mongoose.connection.on('error', err => {
+  console.log('Mongoose connection error:', err)
+})
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected.')
+})
+
 /**
- * Establishes a connection to a database.
- *
- * @returns {Promise} Resolves to this if connection succeeded.
+ * Connect to the database.
  */
-export const connectDB = async () => {
-  const { connection } = mongoose
-
-  // Bind connection to events (to get notifications).
-  connection.on('connected', () => console.log('MongoDB connection opened.'))
-  connection.on('error', err => console.error(`MongoDB connection error occurred: ${err}`))
-  connection.on('disconnected', () => console.log('MongoDB is disconnected.'))
-
-  // If the Node.js process ends, close the connection.
-  process.on('SIGINT', () => {
-    connection.close(() => {
-      console.log('MongoDB disconnected due to application termination.')
-      process.exit(0)
-    })
-  })
-
-  // Connect to the server.
-  return mongoose.connect(process.env.DB_CONNECTION_STRING)
+async function connectDB () {
+  try {
+    await mongoose.connect(dbURI)
+    console.log('Successfully connected to MongoDB.')
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error)
+  }
 }
+
+/**
+ * Close the connection to the database.
+ */
+async function closeDB () {
+  try {
+    await mongoose.disconnect()
+    console.log('Disconnected from MongoDB.')
+  } catch (error) {
+    console.error('Error disconnecting from MongoDB:', error)
+  }
+}
+
+export { connectDB, closeDB }
