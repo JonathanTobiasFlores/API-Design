@@ -1,16 +1,16 @@
 /**
  *
  */
-export class ResourceController {
+export class HiveController {
   /**
-   * POST method.
+   * GET method.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
    * @param {Function} next The next middleware function.
    */
-  async POST (req, res, next) {
-    res.json({ message: 'Postis-Per' })
+  async getHiveStatus (req, res, next) {
+    res.json({ message: 'Gettis-Get' })
   }
 
   /**
@@ -20,37 +20,40 @@ export class ResourceController {
    * @param {object} res The response object.
    * @param {Function} next The next middleware function.
    */
-  async GET (req, res, next) {
+  async getHiveHumidity (req, res, next) {
     res.json({ message: 'Gettis-Get' })
   }
 
   /**
-   * PUT method.
+   * GET method.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
    * @param {Function} next The next middleware function.
    */
-  async PUT (req, res, next) {
+  async getHiveWeight (req, res, next) {
+    res.json({ message: 'Gettis-Get' })
   }
 
   /**
-   * PATCH method.
+   * GET method.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
    * @param {Function} next The next middleware function.
    */
-  async PATCH (req, res, next) {
+  async getHiveTemperature (req, res, next) {
+    res.json({ message: 'Gettis-Get' })
   }
 
   /**
-   * DELETE method.
+   * GET method.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
    * @param {Function} next The next middleware function.
    */
-  async DELETE (req, res, next) {
+  async getHiveFlow (req, res, next) {
+    res.json({ message: 'Gettis-Get' })
   }
 }

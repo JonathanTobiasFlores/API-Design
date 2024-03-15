@@ -7,9 +7,6 @@ try {
   // Create an Express application.
   const app = express()
 
-  // Set the port number.
-  const port = 3000
-
   // Set various HTTP headers to make the application little more secure.
   app.use(helmet())
 
@@ -54,8 +51,8 @@ try {
   })
 
   // Starts the HTTP server listening for connections.
-  app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`)
+  app.listen(process.env.PORT, () => {
+    console.log(`Server running at http://localhost:${process.env.PORT}`)
     console.log('Press Ctrl-C to terminate...')
   })
 } catch (err) {
