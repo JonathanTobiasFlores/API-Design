@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
 
-const dbURI = process.env.DB_URI
-
 mongoose.connection.on('connected', () => {
   console.log('Mongoose connected to DB.')
 })
@@ -19,7 +17,7 @@ mongoose.connection.on('disconnected', () => {
  */
 async function connectDB () {
   try {
-    await mongoose.connect(dbURI)
+    await mongoose.connect(process.env.DB_URI)
     console.log('Successfully connected to MongoDB.')
   } catch (error) {
     console.error('Error connecting to MongoDB:', error)
