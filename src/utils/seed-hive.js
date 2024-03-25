@@ -12,12 +12,6 @@ const mockData = [
         temperature: 34.5,
         weight: 50.2,
         humidity: 60.5
-      },
-      {
-        timestamp: new Date('2022-03-21T08:00:00'),
-        temperature: 35.1,
-        weight: 50.8,
-        humidity: 59.9
       }
     ],
     beeFlow: [
@@ -25,11 +19,6 @@ const mockData = [
         timestamp: new Date('2022-03-20T08:00:00'),
         arrivals: 120,
         departures: 115
-      },
-      {
-        timestamp: new Date('2022-03-21T08:00:00'),
-        arrivals: 130,
-        departures: 125
       }
     ]
   },
@@ -42,12 +31,6 @@ const mockData = [
         temperature: 30.7,
         weight: 48.3,
         humidity: 65.4
-      },
-      {
-        timestamp: new Date('2022-03-21T08:00:00'),
-        temperature: 31.2,
-        weight: 49.0,
-        humidity: 64.8
       }
     ],
     beeFlow: [
@@ -55,11 +38,6 @@ const mockData = [
         timestamp: new Date('2022-03-20T08:00:00'),
         arrivals: 150,
         departures: 140
-      },
-      {
-        timestamp: new Date('2022-03-21T08:00:00'),
-        arrivals: 160,
-        departures: 150
       }
     ]
   }

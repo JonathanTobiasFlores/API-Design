@@ -4,7 +4,7 @@ import { HiveModel } from '../../models/hive-model.js'
  */
 export class HiveController {
   /**
-   * GET method.
+   * GET Hive-Status.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
@@ -12,11 +12,8 @@ export class HiveController {
    */
   async getHiveStatus (req, res, next) {
     try {
-      const { hiveId } = req.params // Extracting hiveId from the URL
-      const hive = await HiveModel.findOne({ hiveId })
-      if (!hive) {
-        return res.status(404).json({ message: 'Hive not found' })
-      }
+      const { hiveId } = req.params
+      const hive = await HiveModel.findOne({ hiveId }, '-beeFlow')
       res.json(hive)
     } catch (error) {
       next(error)
@@ -24,7 +21,7 @@ export class HiveController {
   }
 
   /**
-   * GET method.
+   * GET Hive-Humidity.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
@@ -33,18 +30,19 @@ export class HiveController {
   async getHiveHumidity (req, res, next) {
     try {
       const { hiveId } = req.query
-      const hive = await HiveModel.findOne({ hiveId }, 'measurements.humidity')
-      if (!hive) {
-        return res.status(404).json({ message: 'Hive not found' })
-      }
-      res.json(hive.measurements)
+      const hive = await HiveModel.findOne({ hiveId }, 'measurements.humidity measurements.timestamp')
+      const humidityData = hive.measurements.map(measurement => ({
+        timestamp: measurement.timestamp,
+        humidity: measurement.humidity
+      }))
+      res.json(humidityData)
     } catch (error) {
       next(error)
     }
   }
 
   /**
-   * GET method.
+   * GET Hive-Weight.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
@@ -54,9 +52,6 @@ export class HiveController {
     try {
       const { hiveId } = req.query
       const hive = await HiveModel.findOne({ hiveId }, 'measurements.weight measurements.timestamp')
-      if (!hive) {
-        return res.status(404).json({ message: 'Hive not found' })
-      }
       const weightData = hive.measurements.map(measurement => ({
         timestamp: measurement.timestamp,
         weight: measurement.weight
@@ -68,7 +63,7 @@ export class HiveController {
   }
 
   /**
-   * GET method.
+   * GET Hive-Temperature.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
@@ -78,9 +73,6 @@ export class HiveController {
     try {
       const { hiveId } = req.query
       const hive = await HiveModel.findOne({ hiveId }, 'measurements.temperature measurements.timestamp')
-      if (!hive) {
-        return res.status(404).json({ message: 'Hive not found' })
-      }
       const temperatureData = hive.measurements.map(measurement => ({
         timestamp: measurement.timestamp,
         temperature: measurement.temperature
@@ -92,7 +84,7 @@ export class HiveController {
   }
 
   /**
-   * GET method.
+   * GET Hive Flow.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
@@ -102,9 +94,6 @@ export class HiveController {
     try {
       const { hiveId } = req.query
       const hive = await HiveModel.findOne({ hiveId }, 'beeFlow')
-      if (!hive) {
-        return res.status(404).json({ message: 'Hive not found' })
-      }
       res.json(hive.beeFlow)
     } catch (error) {
       next(error)

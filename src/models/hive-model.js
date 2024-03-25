@@ -34,12 +34,13 @@ const hiveModelSchema = new mongoose.Schema({
   toJSON: {
     virtuals: true,
     /**
+     * Transforms the document, removing the _id property.
      *
-     * @param doc
-     * @param ret
+     * @param {object} doc - The mongoose document which is being converted.
+     * @param {object} ret - The plain object representation which has been converted.
+     * @returns {object} The transformed object.
      */
     transform: (doc, ret) => {
-      // No need to manually delete _id from subdocuments, it's already disabled
       delete ret._id // Remove the top-level _id field
       delete ret.__v // Remove the __v field
       return ret
