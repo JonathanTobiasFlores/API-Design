@@ -51,7 +51,20 @@ export class HiveController {
    * @param {Function} next The next middleware function.
    */
   async getHiveWeight (req, res, next) {
-    res.json({ message: 'Gettis-Get' })
+    try {
+      const { hiveId } = req.query
+      const hive = await HiveModel.findOne({ hiveId }, 'measurements.weight measurements.timestamp')
+      if (!hive) {
+        return res.status(404).json({ message: 'Hive not found' })
+      }
+      const weightData = hive.measurements.map(measurement => ({
+        timestamp: measurement.timestamp,
+        weight: measurement.weight
+      }))
+      res.json(weightData)
+    } catch (error) {
+      next(error)
+    }
   }
 
   /**
@@ -62,7 +75,20 @@ export class HiveController {
    * @param {Function} next The next middleware function.
    */
   async getHiveTemperature (req, res, next) {
-    res.json({ message: 'Gettis-Get' })
+    try {
+      const { hiveId } = req.query
+      const hive = await HiveModel.findOne({ hiveId }, 'measurements.temperature measurements.timestamp')
+      if (!hive) {
+        return res.status(404).json({ message: 'Hive not found' })
+      }
+      const temperatureData = hive.measurements.map(measurement => ({
+        timestamp: measurement.timestamp,
+        temperature: measurement.temperature
+      }))
+      res.json(temperatureData)
+    } catch (error) {
+      next(error)
+    }
   }
 
   /**
@@ -73,6 +99,15 @@ export class HiveController {
    * @param {Function} next The next middleware function.
    */
   async getHiveFlow (req, res, next) {
-    res.json({ message: 'Gettis-Get' })
+    try {
+      const { hiveId } = req.query
+      const hive = await HiveModel.findOne({ hiveId }, 'beeFlow')
+      if (!hive) {
+        return res.status(404).json({ message: 'Hive not found' })
+      }
+      res.json(hive.beeFlow)
+    } catch (error) {
+      next(error)
+    }
   }
 }
