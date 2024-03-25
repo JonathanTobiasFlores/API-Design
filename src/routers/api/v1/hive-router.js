@@ -5,7 +5,7 @@ export const router = express.Router()
 
 const controller = new HiveController()
 
-router.get('/hive-status', (req, res, next) => controller.getHiveStatus(req, res, next))
+router.get('/hive-status/:hiveId', (req, res, next) => controller.getHiveStatus(req, res, next))
 
 router.get('/hive-humidity', (req, res, next) => controller.getHiveHumidity(req, res, next))
 
