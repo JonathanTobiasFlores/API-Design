@@ -22,6 +22,10 @@ const hiveModelSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  name: {
+    type: String,
+    required: true
+  },
   location: {
     type: String,
     required: true

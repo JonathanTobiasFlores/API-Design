@@ -99,4 +99,71 @@ export class HiveController {
       next(error)
     }
   }
+
+  /**
+   * CREATE a new Hive.
+   *
+   * @param {object} req The request object.
+   * @param {object} res The response object.
+   * @param {Function} next The next middleware function.
+   */
+  async createHive (req, res, next) {
+    try {
+      const newHive = new HiveModel(req.body)
+      await newHive.save()
+      res.status(201).json(newHive)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  /**
+   * DELETE a Hive.
+   *
+   * @param {object} req The request object.
+   * @param {object} res The response object.
+   * @param {Function} next The next middleware function.
+   */
+  async deleteHive (req, res, next) {
+    try {
+      const { hiveId } = req.params
+      const deleteHive = await HiveModel.findOneAndDelete({ hiveId })
+      res.status(204).send()
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  /**
+   * UPDATE a Hive.
+   *
+   * @param {object} req The request object.
+   * @param {object} res The response object.
+   * @param {Function} next The next middleware function.
+   */
+  async updateHive (req, res, next) {
+    try {
+      const { hiveId } = req.params
+      const updateData = {}
+
+      // Check for location and name in the request body and prepare update data
+      if (req.body.location) updateData.location = req.body.location
+      if (req.body.name) updateData.name = req.body.name
+
+      // If neither location nor name were provided, return an error
+      if (Object.keys(updateData).length === 0) {
+        return res.status(400).json({ message: 'No valid fields provided for update. Only location and name can be updated.' })
+      }
+
+      const updatedHive = await HiveModel.findOneAndUpdate({ hiveId }, updateData, { new: true })
+
+      if (!updatedHive) {
+        return res.status(404).json({ message: 'Beehive not found' })
+      }
+
+      res.json(updatedHive)
+    } catch (error) {
+      next(error)
+    }
+  }
 }

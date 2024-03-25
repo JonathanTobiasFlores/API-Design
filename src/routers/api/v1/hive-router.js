@@ -14,3 +14,9 @@ router.get('/hive-weight', (req, res, next) => controller.getHiveWeight(req, res
 router.get('/hive-temperature', (req, res, next) => controller.getHiveTemperature(req, res, next))
 
 router.get('/hive-flow', (req, res, next) => controller.getHiveFlow(req, res, next))
+
+router.post('/create-hive', (req, res, next) => controller.createHive(req, res, next))
+
+router.delete('/delete-hive/:hiveId', (req, res, next) => controller.deleteHive(req, res, next))
+
+router.patch('/update-hive/:hiveId', (req, res, next) => controller.updateHive(req, res, next))

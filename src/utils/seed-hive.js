@@ -5,6 +5,7 @@ import { HiveModel } from '../models/hive-model.js'
 const mockData = [
   {
     hiveId: 'hive1',
+    name: 'Beehive One',
     location: 'Orchard Field',
     measurements: [
       {
@@ -24,6 +25,7 @@ const mockData = [
   },
   {
     hiveId: 'hive2',
+    name: 'Beehive Two',
     location: 'Hilltop',
     measurements: [
       {
@@ -61,6 +63,4 @@ async function seedDatabase () {
   }
 }
 
-(async () => {
-  await seedDatabase()
-})()
+seedDatabase().catch(console.error)
