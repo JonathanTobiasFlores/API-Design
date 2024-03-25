@@ -19,4 +19,4 @@ router.post('/create-hive', (req, res, next) => controller.createHive(req, res, 
 
 router.delete('/delete-hive/:hiveId', (req, res, next) => controller.deleteHive(req, res, next))
 
-router.patch('/update-hive/:hiveId', (req, res, next) => controller.updateHive(req, res, next))
+router.put('/update-hive/:hiveId', (req, res, next) => controller.updateHive(req, res, next))
