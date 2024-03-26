@@ -1,4 +1,5 @@
 import { HiveModel } from '../../models/hive-model.js'
+import { Webhook } from '../../models/webhook-model.js'
 /**
  *
  */
@@ -101,7 +102,7 @@ export class HiveController {
   }
 
   /**
-   * CREATE a new Hive.
+   * CREATE a new Hive and notify webhooks using Fetch API.
    *
    * @param {object} req The request object.
    * @param {object} res The response object.
@@ -111,6 +112,33 @@ export class HiveController {
     try {
       const newHive = new HiveModel(req.body)
       await newHive.save()
+
+      // Notify all webhooks interested in 'newHiveCreated' event
+      const webhooks = await Webhook.find({ event: 'newHiveCreated' })
+      webhooks.forEach(async (webhook) => {
+        try {
+          const response = await fetch(webhook.url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              event: 'newHiveCreated',
+              data: {
+                hiveId: newHive.hiveId,
+                location: newHive.location
+              }
+            })
+          })
+
+          if (!response.ok) {
+            throw new Error(`Webhook notification failed with status: ${response.status}`)
+          }
+        } catch (error) {
+          console.error(`Failed to notify webhook ${webhook.url}:`, error)
+        }
+      })
+
       res.status(201).json(newHive)
     } catch (error) {
       next(error)
