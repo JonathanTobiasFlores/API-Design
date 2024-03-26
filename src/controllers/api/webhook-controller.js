@@ -1,47 +1,51 @@
+/* eslint-disable jsdoc/require-returns */
 import { Webhook } from '../../models/webhook-model.js'
 
 /**
  *
  */
 export class WebhookController {
-  // List all webhooks
   /**
+   * List all webhooks.
    *
-   * @param req
-   * @param res
+   * @param {object} req The request object.
+   * @param {object} res The response object.
+   * @param {Function} next The next middleware function.
    */
-  async listWebhooks (req, res) {
+  async listWebhooks (req, res, next) {
     try {
       const webhooks = await Webhook.find()
       res.json(webhooks)
     } catch (error) {
-      res.status(500).json({ message: error.message })
+      next(error)
     }
   }
 
-  // Create a new webhook subscription
   /**
+   * Create a new webhook subscription.
    *
-   * @param req
-   * @param res
+   * @param {object} req The request object.
+   * @param {object} res The response object.
+   * @param {Function} next The next middleware function.
    */
-  async createWebhook (req, res) {
+  async createWebhook (req, res, next) {
     try {
       const webhook = new Webhook(req.body)
       const newWebhook = await webhook.save()
       res.status(201).json(newWebhook)
     } catch (error) {
-      res.status(400).json({ message: error.message })
+      next(error)
     }
   }
 
-  // Delete a webhook subscription
   /**
+   * Delete a webhook subscription.
    *
-   * @param req
-   * @param res
+   * @param {object} req The request object.
+   * @param {object} res The response object.
+   * @param {Function} next The next middleware function.
    */
-  async deleteWebhook (req, res) {
+  async deleteWebhook (req, res, next) {
     try {
       const { id } = req.params
       const webhook = await Webhook.findByIdAndDelete(id)
@@ -50,7 +54,7 @@ export class WebhookController {
       }
       res.status(204).send()
     } catch (error) {
-      res.status(500).json({ message: error.message })
+      next(error)
     }
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-returns */
 import { HiveModel } from '../../models/hive-model.js'
 import { Webhook } from '../../models/webhook-model.js'
 /**
@@ -14,7 +15,10 @@ export class HiveController {
   async getHiveStatus (req, res, next) {
     try {
       const { hiveId } = req.params
-      const hive = await HiveModel.findOne({ hiveId }, '-beeFlow')
+      const hive = await HiveModel.findOne({ hiveId })
+      if (!hive) {
+        return res.status(404).json({ message: 'Hive not found' })
+      }
       res.json(hive)
     } catch (error) {
       next(error)
@@ -155,7 +159,10 @@ export class HiveController {
   async deleteHive (req, res, next) {
     try {
       const { hiveId } = req.params
-      const deleteHive = await HiveModel.findOneAndDelete({ hiveId })
+      const deletedHive = await HiveModel.findOneAndDelete({ hiveId })
+      if (!deletedHive) {
+        return res.status(404).json({ message: 'Hive not found' })
+      }
       res.status(204).send()
     } catch (error) {
       next(error)
