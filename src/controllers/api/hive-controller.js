@@ -19,7 +19,56 @@ export class HiveController {
       if (!hive) {
         return res.status(404).json({ message: 'Hive not found' })
       }
-      res.json(hive)
+
+      const response = {
+        hive,
+        links: [
+          {
+            rel: 'self',
+            method: 'GET',
+            href: `/api/v1/hive-status/${hiveId}`,
+            title: "This hive's status"
+          },
+          {
+            rel: 'update',
+            method: 'PUT',
+            href: `/api/v1/update-hive/${hiveId}`,
+            title: 'Update this hive'
+          },
+          {
+            rel: 'delete',
+            method: 'DELETE',
+            href: `/api/v1/delete-hive/${hiveId}`,
+            title: 'Delete this hive'
+          },
+          {
+            rel: 'humidity-data',
+            method: 'GET',
+            href: `/api/v1/hive-humidity?hiveId=${hiveId}`,
+            title: 'View humidity data for this hive'
+          },
+          {
+            rel: 'weight-data',
+            method: 'GET',
+            href: `/api/v1/hive-weight?hiveId=${hiveId}`,
+            title: 'View weight data for this hive'
+          },
+          {
+            rel: 'temperature-data',
+            method: 'GET',
+            href: `/api/v1/hive-temperature?hiveId=${hiveId}`,
+            title: 'View temperature data for this hive'
+          },
+          {
+            rel: 'bee-flow-data',
+            method: 'GET',
+            href: `/api/v1/hive-flow?hiveId=${hiveId}`,
+            title: 'View bee flow data for this hive'
+          }
+        ]
+      }
+
+      res.json(response)
     } catch (error) {
       next(error)
     }
@@ -36,11 +85,51 @@ export class HiveController {
     try {
       const { hiveId } = req.query
       const hive = await HiveModel.findOne({ hiveId }, 'measurements.humidity measurements.timestamp')
+      if (!hive) {
+        return res.status(404).json({ message: 'Hive not found' })
+      }
       const humidityData = hive.measurements.map(measurement => ({
         timestamp: measurement.timestamp,
         humidity: measurement.humidity
       }))
-      res.json(humidityData)
+
+      const response = {
+        humidityData,
+        links: [
+          {
+            rel: 'self',
+            method: 'GET',
+            href: `/api/v1/hive-humidity?hiveId=${hiveId}`,
+            title: "This hive's humidity data"
+          },
+          {
+            rel: 'hive-status',
+            method: 'GET',
+            href: `/api/v1/hive-status/${hiveId}`,
+            title: "View this hive's status"
+          },
+          {
+            rel: 'weight-data',
+            method: 'GET',
+            href: `/api/v1/hive-weight?hiveId=${hiveId}`,
+            title: 'View weight data for this hive'
+          },
+          {
+            rel: 'temperature-data',
+            method: 'GET',
+            href: `/api/v1/hive-temperature?hiveId=${hiveId}`,
+            title: 'View temperature data for this hive'
+          },
+          {
+            rel: 'bee-flow-data',
+            method: 'GET',
+            href: `/api/v1/hive-flow?hiveId=${hiveId}`,
+            title: 'View bee flow data for this hive'
+          }
+        ]
+      }
+
+      res.json(response)
     } catch (error) {
       next(error)
     }
@@ -57,11 +146,51 @@ export class HiveController {
     try {
       const { hiveId } = req.query
       const hive = await HiveModel.findOne({ hiveId }, 'measurements.weight measurements.timestamp')
+      if (!hive) {
+        return res.status(404).json({ message: 'Hive not found' })
+      }
       const weightData = hive.measurements.map(measurement => ({
         timestamp: measurement.timestamp,
         weight: measurement.weight
       }))
-      res.json(weightData)
+
+      const response = {
+        weightData,
+        links: [
+          {
+            rel: 'self',
+            method: 'GET',
+            href: `/api/v1/hive-weight?hiveId=${hiveId}`,
+            title: "This hive's weight data"
+          },
+          {
+            rel: 'hive-status',
+            method: 'GET',
+            href: `/api/v1/hive-status/${hiveId}`,
+            title: "View this hive's status"
+          },
+          {
+            rel: 'humidity-data',
+            method: 'GET',
+            href: `/api/v1/hive-humidity?hiveId=${hiveId}`,
+            title: 'View humidity data for this hive'
+          },
+          {
+            rel: 'temperature-data',
+            method: 'GET',
+            href: `/api/v1/hive-temperature?hiveId=${hiveId}`,
+            title: 'View temperature data for this hive'
+          },
+          {
+            rel: 'bee-flow-data',
+            method: 'GET',
+            href: `/api/v1/hive-flow?hiveId=${hiveId}`,
+            title: 'View bee flow data for this hive'
+          }
+        ]
+      }
+
+      res.json(response)
     } catch (error) {
       next(error)
     }
@@ -78,11 +207,51 @@ export class HiveController {
     try {
       const { hiveId } = req.query
       const hive = await HiveModel.findOne({ hiveId }, 'measurements.temperature measurements.timestamp')
+      if (!hive) {
+        return res.status(404).json({ message: 'Hive not found' })
+      }
       const temperatureData = hive.measurements.map(measurement => ({
         timestamp: measurement.timestamp,
         temperature: measurement.temperature
       }))
-      res.json(temperatureData)
+
+      const response = {
+        temperatureData,
+        links: [
+          {
+            rel: 'self',
+            method: 'GET',
+            href: `/api/v1/hive-temperature?hiveId=${hiveId}`,
+            title: "This hive's temperature data"
+          },
+          {
+            rel: 'hive-status',
+            method: 'GET',
+            href: `/api/v1/hive-status/${hiveId}`,
+            title: "View this hive's status"
+          },
+          {
+            rel: 'humidity-data',
+            method: 'GET',
+            href: `/api/v1/hive-humidity?hiveId=${hiveId}`,
+            title: 'View humidity data for this hive'
+          },
+          {
+            rel: 'weight-data',
+            method: 'GET',
+            href: `/api/v1/hive-weight?hiveId=${hiveId}`,
+            title: 'View weight data for this hive'
+          },
+          {
+            rel: 'bee-flow-data',
+            method: 'GET',
+            href: `/api/v1/hive-flow?hiveId=${hiveId}`,
+            title: 'View bee flow data for this hive'
+          }
+        ]
+      }
+
+      res.json(response)
     } catch (error) {
       next(error)
     }
@@ -99,7 +268,47 @@ export class HiveController {
     try {
       const { hiveId } = req.query
       const hive = await HiveModel.findOne({ hiveId }, 'beeFlow')
-      res.json(hive.beeFlow)
+      if (!hive) {
+        return res.status(404).json({ message: 'Hive not found' })
+      }
+
+      const response = {
+        beeFlow: hive.beeFlow,
+        links: [
+          {
+            rel: 'self',
+            method: 'GET',
+            href: `/api/v1/hive-flow?hiveId=${hiveId}`,
+            title: "This hive's bee flow data"
+          },
+          {
+            rel: 'hive-status',
+            method: 'GET',
+            href: `/api/v1/hive-status/${hiveId}`,
+            title: "View this hive's status"
+          },
+          {
+            rel: 'humidity-data',
+            method: 'GET',
+            href: `/api/v1/hive-humidity?hiveId=${hiveId}`,
+            title: 'View humidity data for this hive'
+          },
+          {
+            rel: 'weight-data',
+            method: 'GET',
+            href: `/api/v1/hive-weight?hiveId=${hiveId}`,
+            title: 'View weight data for this hive'
+          },
+          {
+            rel: 'temperature-data',
+            method: 'GET',
+            href: `/api/v1/hive-temperature?hiveId=${hiveId}`,
+            title: 'View temperature data for this hive'
+          }
+        ]
+      }
+
+      res.json(response)
     } catch (error) {
       next(error)
     }
@@ -117,6 +326,9 @@ export class HiveController {
       const newHive = new HiveModel(req.body)
       await newHive.save()
 
+      // Extract hiveId from newHive
+      const hiveId = newHive.hiveId
+
       // Notify all webhooks interested in 'newHiveCreated' event
       const webhooks = await Webhook.find({ event: 'newHiveCreated' })
       webhooks.forEach(async (webhook) => {
@@ -129,7 +341,7 @@ export class HiveController {
             body: JSON.stringify({
               event: 'newHiveCreated',
               data: {
-                hiveId: newHive.hiveId,
+                hiveId,
                 location: newHive.location
               }
             })
@@ -143,7 +355,52 @@ export class HiveController {
         }
       })
 
-      res.status(201).json(newHive)
+      const links = [
+        {
+          rel: 'self',
+          method: 'GET',
+          href: `/api/v1/hive-status/${hiveId}`,
+          title: "This hive's status"
+        },
+        {
+          rel: 'update',
+          method: 'PUT',
+          href: `/api/v1/update-hive/${hiveId}`,
+          title: 'Update this hive'
+        },
+        {
+          rel: 'delete',
+          method: 'DELETE',
+          href: `/api/v1/delete-hive/${hiveId}`,
+          title: 'Delete this hive'
+        },
+        {
+          rel: 'humidity-data',
+          method: 'GET',
+          href: `/api/v1/hive-humidity?hiveId=${hiveId}`,
+          title: 'View humidity data for this hive'
+        },
+        {
+          rel: 'weight-data',
+          method: 'GET',
+          href: `/api/v1/hive-weight?hiveId=${hiveId}`,
+          title: 'View weight data for this hive'
+        },
+        {
+          rel: 'temperature-data',
+          method: 'GET',
+          href: `/api/v1/hive-temperature?hiveId=${hiveId}`,
+          title: 'View temperature data for this hive'
+        },
+        {
+          rel: 'bee-flow-data',
+          method: 'GET',
+          href: `/api/v1/hive-flow?hiveId=${hiveId}`,
+          title: 'View bee flow data for this hive'
+        }
+      ]
+
+      res.status(201).json({ newHive, links })
     } catch (error) {
       next(error)
     }
@@ -196,7 +453,43 @@ export class HiveController {
         return res.status(404).json({ message: 'Beehive not found' })
       }
 
-      res.json(updatedHive)
+      const response = {
+        updatedHive,
+        links: [
+          {
+            rel: 'self',
+            method: 'GET',
+            href: `/api/v1/hive-status/${hiveId}`,
+            title: "View this hive's updated status"
+          },
+          {
+            rel: 'humidity-data',
+            method: 'GET',
+            href: `/api/v1/hive-humidity?hiveId=${hiveId}`,
+            title: 'View humidity data for this hive'
+          },
+          {
+            rel: 'weight-data',
+            method: 'GET',
+            href: `/api/v1/hive-weight?hiveId=${hiveId}`,
+            title: 'View weight data for this hive'
+          },
+          {
+            rel: 'temperature-data',
+            method: 'GET',
+            href: `/api/v1/hive-temperature?hiveId=${hiveId}`,
+            title: 'View temperature data for this hive'
+          },
+          {
+            rel: 'bee-flow-data',
+            method: 'GET',
+            href: `/api/v1/hive-flow?hiveId=${hiveId}`,
+            title: 'View bee flow data for this hive'
+          }
+        ]
+      }
+
+      res.json(response)
     } catch (error) {
       next(error)
     }

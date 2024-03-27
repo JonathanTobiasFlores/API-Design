@@ -26,11 +26,13 @@ export class AuthController {
         expiresIn: accessTokenLife
       })
 
-      res
-        .status(200)
-        .json({
-          access_token: accessToken
-        })
+      res.status(200).json({
+        access_token: accessToken,
+        links: [
+          { rel: 'self', method: 'POST', href: '/api/v1/auth/login', title: 'Log in' },
+          { rel: 'register', method: 'POST', href: '/api/v1/auth/register', title: 'Register a new account' }
+        ]
+      })
     } catch (error) {
       next(error)
     }
@@ -54,7 +56,11 @@ export class AuthController {
       // Respond with the user id and username but not the password or other sensitive info
       res.status(201).json({
         id: user.id,
-        username: user.username
+        username: user.username,
+        links: [
+          { rel: 'self', method: 'POST', href: '/api/v1/auth/register', title: 'Register a new account' },
+          { rel: 'login', method: 'POST', href: '/api/v1/auth/login', title: 'Log in with this account' }
+        ]
       })
     } catch (error) {
       if (error.code === 11000) {
