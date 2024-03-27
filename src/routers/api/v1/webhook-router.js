@@ -50,7 +50,7 @@ const webhookController = new WebhookController()
  *                         type: string
  *                         example: List all webhooks
  */
-router.get('/', (req, res) => {
+router.get('/', webhookController.listWebhooks, (req, res) => {
   res.json({
     message: 'Webhooks endpoint',
     links: [

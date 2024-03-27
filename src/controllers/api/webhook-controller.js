@@ -39,7 +39,6 @@ export class WebhookController {
     try {
       const webhook = new Webhook(req.body)
       const newWebhook = await webhook.save()
-      // Adding HATEOAS links to the create response
       const response = {
         ...newWebhook.toObject(),
         links: [
