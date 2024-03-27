@@ -4,21 +4,22 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Beehive API',
+      title: 'Beehive Monitoring API',
       version: '1.0.0',
-      description: 'A simple API about beehives',
-      contact: {
-        name: 'Jonathan Flores',
-        email: 'jf223mu@student.lnu.se'
+      description: 'Bee welcome'
+    },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
       }
     },
-    servers: [
-      {
-        url: 'http://localhost:3000/api/v1'
-      }
-    ]
+    security: [{ bearerAuth: [] }]
   },
-  apis: ['./api/v1/routes/*.js']
+  apis: ['./src/routers/api/v1/*.js']
 }
 
 export const specs = swaggerJsdoc(options)

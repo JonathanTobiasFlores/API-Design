@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-returns */
 import jwt from 'jsonwebtoken'
 import { User } from '../../models/user-model.js'
 
@@ -14,7 +15,15 @@ export class AuthController {
    */
   async login (req, res, next) {
     try {
+      if (!req.body.username || !req.body.password) {
+        return res.status(400).json({ error: 'Username and password are required.' })
+      }
       const user = await User.authenticate(req.body.username, req.body.password)
+
+      if (!user) {
+        // This is a generic message for failed authentication to avoid enumeration attacks
+        return res.status(401).json({ error: 'Invalid credentials. Please try again.' })
+      }
 
       const payload = {
         username: user.username,
