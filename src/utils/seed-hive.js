@@ -42,6 +42,46 @@ const mockData = [
         departures: 140
       }
     ]
+  },
+  {
+    hiveId: 'hive3',
+    name: 'Beehive Three',
+    location: 'Sunny Meadow',
+    measurements: [
+      {
+        timestamp: new Date('2022-04-15T09:30:00'),
+        temperature: 29.4,
+        weight: 52.1,
+        humidity: 55.3
+      }
+    ],
+    beeFlow: [
+      {
+        timestamp: new Date('2022-04-15T09:30:00'),
+        arrivals: 180,
+        departures: 170
+      }
+    ]
+  },
+  {
+    hiveId: 'hive4',
+    name: 'Beehive Four',
+    location: 'Deep Forest',
+    measurements: [
+      {
+        timestamp: new Date('2022-05-05T10:45:00'),
+        temperature: 28.0,
+        weight: 47.8,
+        humidity: 58.7
+      }
+    ],
+    beeFlow: [
+      {
+        timestamp: new Date('2022-05-05T10:45:00'),
+        arrivals: 160,
+        departures: 150
+      }
+    ]
   }
 ]
 
