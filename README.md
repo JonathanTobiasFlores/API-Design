@@ -192,5 +192,5 @@ To test the API, import the Postman collection from the repo. "BEEHIVE API.postm
 ## Swagger Documentation
 
 For an exhaustive guide to all our endpoints, parameters, and expected responses, visit our Swagger documentation page. It's a convenient way to explore and test our API in real-time.
-    Swagger Docs: Access Here https://cscloud6-247.lnu.se/api-design/api/v1/docs
+    Swagger Docs: Access Here https://cscloud6-247.lnu.se/api-design/api/v1/docs/
 

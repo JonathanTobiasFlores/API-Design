@@ -1,4 +1,10 @@
 import swaggerJsdoc from 'swagger-jsdoc'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+
+// Convert the import.meta.url to a file path
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const options = {
   definition: {
@@ -8,12 +14,6 @@ const options = {
       version: '1.0.0',
       description: 'This API provides endpoints for managing beehives, including retrieving statuses, humidity, weight, temperature, and bee flow data. It also supports user authentication and webhook management.'
     },
-    servers: [
-      {
-        url: 'https://cscloud6-247.lnu.se/api-design/',
-        description: 'Production server'
-      }
-    ],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -25,7 +25,7 @@ const options = {
     },
     security: [{ bearerAuth: [] }]
   },
-  apis: ['./src/routers/api/v1/*.js']
+  apis: [join(__dirname, '../routers/api/v1/*.js')]
 }
 
 export const specs = swaggerJsdoc(options)
