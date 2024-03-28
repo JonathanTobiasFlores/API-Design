@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "7d47838f-2ffe-4147-b91b-84ee364a3f6f",
+		"name": "BEEHIVE API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24439852"
+	},
+	"item": [
+		{
+			"name": "REGISTER USER",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Generate a unique identifier for username to avoid conflicts",
+							"pm.environment.set(\"currentUsername\", \"olle\");",
+							"pm.environment.set(\"currentPassword\", \"olle12345678\");",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{currentUsername}}\",\n    \"password\": \"{{currentPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/auth/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN USER",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();",
+							"",
+							"pm.collectionVariables.set(\"token\", responseData.access_token);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{currentUsername}}\",\n    \"password\": \"{{currentPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE HIVE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"hiveId\": \"hive\",\n  \"name\": \"Orchard Hive\",\n  \"location\": \"Orchard\",\n  \"measurements\": [\n    {\n      \"timestamp\": \"2023-03-30T10:00:00Z\",\n      \"temperature\": 35,\n      \"weight\": 50.5,\n      \"humidity\": 45\n    }\n  ],\n  \"beeFlow\": [\n    {\n      \"timestamp\": \"2023-03-30T10:00:00Z\",\n      \"arrivals\": 200,\n      \"departures\": 150\n    }\n  ]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/create-hive",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"create-hive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET HIVE-STATUS ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/hive-status/hive",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hive-status",
+						"hive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET HIVE-HUMIDITY ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/hive-humidity?hiveId=hive",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hive-humidity"
+					],
+					"query": [
+						{
+							"key": "hiveId",
+							"value": "hive"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET HIVE-WEIGHT ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/hive-weight?hiveId=hive",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hive-weight"
+					],
+					"query": [
+						{
+							"key": "hiveId",
+							"value": "hive"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET HIVE-TEMPERATURE ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/hive-temperature?hiveId=hive",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hive-temperature"
+					],
+					"query": [
+						{
+							"key": "hiveId",
+							"value": "hive"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET HIVE-FLOW DATE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/hive-flow?hiveId=hive",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hive-flow"
+					],
+					"query": [
+						{
+							"key": "hiveId",
+							"value": "hive"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE HIVE ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"updatedhive\",\n  \"location\": \"updatedhill\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/update-hive/hive",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"update-hive",
+						"hive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WEBHOOKS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();",
+							"pm.collectionVariables.set(\"webhookId\", responseData._id);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"url\": \"https://webhook.site/01397952-62e4-4841-82a2-bb6de22cd681\",\n  \"event\": \"newHiveCreated\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/webhooks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"webhooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL WEBHOOKS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/webhooks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"webhooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE WEBHOOKS",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/webhooks/{{webhookId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"webhooks",
+						"{{webhookId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE HIVE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/delete-hive/hive",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"delete-hive",
+						"hive"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "currentUsername",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "currentPassword",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "webhookId",
+			"value": ""
+		}
+	]
+}

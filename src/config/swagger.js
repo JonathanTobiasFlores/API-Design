@@ -6,8 +6,14 @@ const options = {
     info: {
       title: 'Beehive Monitoring API',
       version: '1.0.0',
-      description: 'Bee welcome'
+      description: 'This API provides endpoints for managing beehives, including retrieving statuses, humidity, weight, temperature, and bee flow data. It also supports user authentication and webhook management.'
     },
+    servers: [
+      {
+        url: 'https://cscloud6-247.lnu.se/api-design/',
+        description: 'Production server'
+      }
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
