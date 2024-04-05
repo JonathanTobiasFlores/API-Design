@@ -13,9 +13,26 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"// Generate a unique identifier for username to avoid conflicts",
-							"pm.environment.set(\"currentUsername\", \"olle\");",
-							"pm.environment.set(\"currentPassword\", \"olle12345678\");",
+							"// Generate a unique identifier using fixed strings and random numbers",
+							"let uniqueId = Math.random().toString(36).substr(2, 5); // Generates a random 5-character string",
+							"let username = \"olle\" + uniqueId;",
+							"let password = \"olle12345678\"; // Assuming you want to keep the password consistent",
+							"",
+							"pm.environment.set(\"currentUsername\", username);",
+							"pm.environment.set(\"currentPassword\", password);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 Created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
 							""
 						],
 						"type": "text/javascript",
@@ -60,6 +77,14 @@
 							"const responseData = pm.response.json();",
 							"",
 							"pm.collectionVariables.set(\"token\", responseData.access_token);",
+							"",
+							"pm.test(\"Response body has an authentication token\", function () {",
+							"    let jsonData = pm.response.json();",
+							"",
+							"    pm.expect(jsonData).to.have.property(\"access_token\");",
+							"    console.log(jsonData.access_token); ",
+							"    pm.expect(jsonData.access_token).to.not.be.empty;",
+							"});",
 							""
 						],
 						"type": "text/javascript",
@@ -96,6 +121,21 @@
 		},
 		{
 			"name": "CREATE HIVE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 Created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -124,6 +164,20 @@
 		},
 		{
 			"name": "GET HIVE-STATUS ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -144,6 +198,21 @@
 		},
 		{
 			"name": "GET HIVE-HUMIDITY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -169,6 +238,21 @@
 		},
 		{
 			"name": "GET HIVE-WEIGHT ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -194,6 +278,21 @@
 		},
 		{
 			"name": "GET HIVE-TEMPERATURE ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -219,6 +318,21 @@
 		},
 		{
 			"name": "GET HIVE-FLOW DATE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -244,6 +358,21 @@
 		},
 		{
 			"name": "UPDATE HIVE ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -280,6 +409,11 @@
 						"exec": [
 							"const responseData = pm.response.json();",
 							"pm.collectionVariables.set(\"webhookId\", responseData._id);",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
 							""
 						],
 						"type": "text/javascript",
@@ -315,6 +449,21 @@
 		},
 		{
 			"name": "GET ALL WEBHOOKS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -334,6 +483,21 @@
 		},
 		{
 			"name": "DELETE WEBHOOKS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204 No Contet\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -354,6 +518,21 @@
 		},
 		{
 			"name": "DELETE HIVE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204 No Contet\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -428,6 +607,10 @@
 		},
 		{
 			"key": "webhookId",
+			"value": ""
+		},
+		{
+			"key": "access_token",
 			"value": ""
 		}
 	]
